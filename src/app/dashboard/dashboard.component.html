@@ -1,0 +1,53 @@
+<div class="form-container">
+  <form [formGroup]="chartFilterForm" class="row">
+
+    <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+      <ng-select formControlName="outlet" placeholder="Outlet" multiple="true">
+        <ng-option *ngFor="let out of outletList" [value]="out.id">{{out.name}}</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12 p-2 text-center">
+      <div class="custom-control custom-switch">
+        <label class="" for="customSwitch1">Amount</label>
+        <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="amtQty">
+        <label class="custom-control-label" for="customSwitch1">Quantity</label>
+      </div>
+
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+      <ng-select formControlName="total" placeholder="Total/Average/Weekdays Avg/Weekend Avg">
+        <ng-option value="total">Total</ng-option>
+        <ng-option value="average">Average</ng-option>
+        <ng-option value="weekdays-avg">Weekdays Avg</ng-option>
+        <ng-option value="weekend-avg">Weekend Avg</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+      <ng-select formControlName="daysRange" placeholder="Last 10 Days/Current Month/Quarters/Custom Dates">
+        <ng-option value="total">Last 10 Days</ng-option>
+        <ng-option value="average">Current Month</ng-option>
+        <ng-option value="weekdays-avg">Quarter</ng-option>
+        <ng-option value="weekend-avg">Custom Dates</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+      <ng-select formControlName="quarter" placeholder="Quarter">
+        <ng-option value="1">1</ng-option>
+        <ng-option value="2">2</ng-option>
+        <ng-option value="3">3</ng-option>
+        <ng-option value="4">4</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+      <input type="submit" value="Submit" class="btn btn-success" />&nbsp;
+      <input type="button" value="Reset" class="btn btn-danger" />
+    </div>
+  </form>
+
+</div>
+<div class="row">
+<div class="col-md-6 col-sm-12 col-xs-12">
+  <app-chart chart_label="Total Dine in Sale"></app-chart>
+</div>
+
+</div>

@@ -1,0 +1,43 @@
+.container-fluid {
+  padding: 0;
+}
+.header {
+  background: #252733;
+  color: #FFF;
+  height: 50px;
+  .logo-container {
+    width: 14.8vw;
+    background: #000;
+    img {
+
+    }
+  }
+}
+.content {
+  display: flex;
+  .sidebar-container {
+    background: #263544;
+    min-height: 100vh;
+    width: 15vw;
+    ul {
+      width: 100%;
+      list-style: none;
+      li{
+        padding: 10px 0;
+        a {
+          color: #FFF;
+          font-weight: 500;
+          text-decoration: none;
+          &:hover {
+            color: #b2b2b2;
+
+          }
+        }
+      }
+    }
+  }
+  .right-container {
+    width: 85vw;
+    padding: 10px;
+  }
+}

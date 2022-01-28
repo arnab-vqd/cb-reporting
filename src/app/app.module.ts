@@ -1,14 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { LayoutComponent } from './layout/layout.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ChartcontainerComponent } from './chartcontainer/chartcontainer.component';
+import { ChartModule } from 'angular2-chartjs';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LayoutComponent,
+    DashboardComponent,
+    ChartcontainerComponent
   ],
   imports: [
+    ChartModule,
+    NgSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
     BrowserModule,
     AppRoutingModule
   ],
