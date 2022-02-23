@@ -1,3 +1,11 @@
+
+<div class="sub-title-container">
+  <ul class="sub-title-ul">
+    <li>Overview</li>
+    <li>List</li>
+    <li>Board</li>
+  </ul>
+</div>
 <div class="form-container">
   <form [formGroup]="chartFilterForm" class="row">
 
@@ -46,7 +54,42 @@
 
 </div>
 <div class="row">
-<div class="col-md-6 col-sm-12 col-xs-12">
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="stat-container">
+      <div class="stat-title">Completed Tasks</div>
+      <div class="stat-filter"><i class="fa fa-filter"></i> 1 Filter</div>
+      <div class="stat-value">100</div>
+      <div class="stat-item">Task Count</div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="stat-container">
+      <div class="stat-title">Incomplete Tasks</div>
+      <div class="stat-filter"><i class="fa fa-filter"></i>  1 Filter</div>
+      <div class="stat-value">18</div>
+      <div class="stat-item">Task Count</div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="stat-container">
+      <div class="stat-title">Overdue Tasks</div>
+      <div class="stat-filter"><i class="fa fa-filter"></i>  1 Filter</div>
+      <div class="stat-value">4</div>
+      <div class="stat-item">Task Count</div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="stat-container">
+      <div class="stat-title">Total Tasks</div>
+      <div class="stat-filter"><i class="fa fa-filter"></i>  1 Filter</div>
+      <div class="stat-value">118</div>
+      <div class="stat-item">Task Count</div>
+    </div>
+  </div>
+
+</div>
+<div class="row">
+<div class="col-md-12 col-sm-12 col-xs-12">
   <app-chart chart_label="Total Dine in Sale"></app-chart>
 </div>
 

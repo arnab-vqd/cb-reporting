@@ -1,43 +1,73 @@
 .container-fluid {
   padding: 0;
+  display: flex;
 }
 .header {
-  background: #252733;
-  color: #FFF;
+  //background: #252733;
+  //color: #FFF;
   height: 50px;
+  display: flex;
+  justify-content: space-between;
+  .title h1 {
+    font-size: 25px;
+    padding: 10px 15px;
+  }
+  .header-user-container {
+    padding: 10px 15px;
+    label {
+      padding: 0 10px;
+      font-size: 20px;
+      color: #989797;
+    }
+  }
+
+}
+.sidebar-container {
+  background: #263544;
+  min-height: 100vh;
+  width: 15vw;
   .logo-container {
-    width: 14.8vw;
-    background: #000;
+    padding: 5px 10px;
     img {
 
     }
   }
-}
-.content {
-  display: flex;
-  .sidebar-container {
-    background: #263544;
-    min-height: 100vh;
-    width: 15vw;
-    ul {
-      width: 100%;
-      list-style: none;
-      li{
-        padding: 10px 0;
+  ul {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li{
+      padding: 10px 20px 10px 40px;
+      a {
+        color: #c6c6c6;
+        font-weight: normal;
+        text-decoration: none;
+        &:hover {
+          color: #b2b2b2;
+
+        }
+      }
+      &.no-link {
+        padding: 10px 20px 10px 20px;
         a {
-          color: #FFF;
           font-weight: 500;
-          text-decoration: none;
           &:hover {
-            color: #b2b2b2;
+            color: #c6c6c6;
 
           }
         }
       }
+
     }
   }
+}
+
+.content {
+  display: flex;
   .right-container {
     width: 85vw;
     padding: 10px;
   }
+
 }
