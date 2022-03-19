@@ -13,12 +13,12 @@ export class ChartcontainerComponent implements OnInit {
     datasets: [
       {
         label: 'Dine in',
-        data: [10, 45, 52, 74, 20, 25],
+        data: [48741, 18312, 11977, 15519, 108, 2825],
         backgroundColor: 'rgb(202 21 63)'
       },
       {
         label: 'Delivery',
-        data: [40, 25, 42, 17, 20, 36],
+        data: [12781, 9403, 1568, 15, 1655, 0],
         backgroundColor: 'rgb(6 126 246)'
       }
     ]

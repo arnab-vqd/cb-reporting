@@ -26,6 +26,38 @@ export class DashboardComponent implements OnInit {
   chartFilterForm: FormGroup;
   constructor(private fb: FormBuilder) { }
 
+  cardList: any = [{
+    title: 'Food Sale',
+    categoryIcon: 'fa fa-glass',
+    categoryTitle: 'Food',
+    count: '10239',
+    unitType: 'Quantity'
+  }, {
+    title: 'Beverage Sale',
+    categoryIcon: 'fa fa-glass',
+    categoryTitle: 'Liquor',
+    count: '23434',
+    unitType: 'Quantity'
+  }, {
+    title: 'Hookah Sale',
+    categoryIcon: 'fa fa-glass',
+    categoryTitle: 'Liquor',
+    count: '3434',
+    unitType: 'Quantity'
+  }, {
+    title: 'Buffet Sale',
+    categoryIcon: 'fa fa-glass',
+    categoryTitle: 'Liquor',
+    count: '4234',
+    unitType: 'Quantity'
+  }, {
+    title: 'Liquor Sale',
+    categoryIcon: 'fa fa-glass',
+    categoryTitle: 'Liquor',
+    count: '13123',
+    unitType: 'Quantity'
+  }];
+
   ngOnInit() {
     this.chartFilterForm = this.fb.group({
       outlet: [null],

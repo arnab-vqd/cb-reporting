@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  pageTitle: any = 'Customer Stories - Q4';
+  pageTitle: any = 'Dashboard';
   constructor() { }
 
   ngOnInit() {

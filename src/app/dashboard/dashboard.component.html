@@ -1,44 +1,37 @@
 
-<div class="sub-title-container">
-  <ul class="sub-title-ul">
-    <li>Overview</li>
-    <li>List</li>
-    <li>Board</li>
-  </ul>
-</div>
+<!--<div class="sub-title-container">-->
+<!--  <ul class="sub-title-ul">-->
+<!--    <li>Overview</li>-->
+<!--    <li>List</li>-->
+<!--    <li>Board</li>-->
+<!--  </ul>-->
+<!--</div>-->
 <div class="form-container">
   <form [formGroup]="chartFilterForm" class="row">
 
-    <div class="col-md-4 col-sm-6 col-xs-12 p-2">
-      <ng-select formControlName="outlet" placeholder="Outlet" multiple="true">
+    <div class="col-md-2 p-2">
+      <ng-select formControlName="outlet" placeholder="Select Outlet" multiple="true">
         <ng-option *ngFor="let out of outletList" [value]="out.id">{{out.name}}</ng-option>
       </ng-select>
     </div>
-    <div class="col-md-4 col-sm-6 col-xs-12 p-2 text-center">
-      <div class="custom-control custom-switch">
-        <label class="" for="customSwitch1">Amount</label>
-        <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="amtQty">
-        <label class="custom-control-label" for="customSwitch1">Quantity</label>
-      </div>
 
-    </div>
-    <div class="col-md-4 col-sm-6 col-xs-12 p-2">
-      <ng-select formControlName="total" placeholder="Total/Average/Weekdays Avg/Weekend Avg">
+    <div class="col-md-2 p-2">
+      <ng-select formControlName="total" placeholder="Select Type">
         <ng-option value="total">Total</ng-option>
         <ng-option value="average">Average</ng-option>
         <ng-option value="weekdays-avg">Weekdays Avg</ng-option>
         <ng-option value="weekend-avg">Weekend Avg</ng-option>
       </ng-select>
     </div>
-    <div class="col-md-4 col-sm-6 col-xs-12 p-2">
-      <ng-select formControlName="daysRange" placeholder="Last 10 Days/Current Month/Quarters/Custom Dates">
+    <div class="col-md-2 p-2">
+      <ng-select formControlName="daysRange" placeholder="Select Days">
         <ng-option value="total">Last 10 Days</ng-option>
         <ng-option value="average">Current Month</ng-option>
         <ng-option value="weekdays-avg">Quarter</ng-option>
-        <ng-option value="weekend-avg">Custom Dates</ng-option>
+<!--        <ng-option value="weekend-avg">Custom Dates</ng-option>-->
       </ng-select>
     </div>
-    <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+    <div class="col-md-2 p-2">
       <ng-select formControlName="quarter" placeholder="Quarter">
         <ng-option value="1">1</ng-option>
         <ng-option value="2">2</ng-option>
@@ -46,47 +39,26 @@
         <ng-option value="4">4</ng-option>
       </ng-select>
     </div>
-    <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+    <div class="col-md-2 p-2">
       <input type="submit" value="Submit" class="btn btn-success" />&nbsp;
       <input type="button" value="Reset" class="btn btn-danger" />
+    </div>
+    <div class="col-md-3 p-3 ">
+      <div class="custom-control custom-switch">
+        <label class="" for="customSwitch1">Amount</label>
+        <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="amtQty">
+        <label class="custom-control-label" for="customSwitch1">Quantity</label>
+      </div>
     </div>
   </form>
 
 </div>
 <div class="row">
-  <div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="stat-container">
-      <div class="stat-title">Completed Tasks</div>
-      <div class="stat-filter"><i class="fa fa-filter"></i> 1 Filter</div>
-      <div class="stat-value">100</div>
-      <div class="stat-item">Task Count</div>
-    </div>
+  <div class="col-md-2 col-sm-6 col-xs-12" *ngFor="let card of cardList">
+    <app-cardcontainer [title]="card.title" [categoryIcon]="card.categoryIcon"
+                       [categoryTitle]="card.categoryTitle" [count]="card.count"
+                       [unitType]="card.unitType"></app-cardcontainer>
   </div>
-  <div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="stat-container">
-      <div class="stat-title">Incomplete Tasks</div>
-      <div class="stat-filter"><i class="fa fa-filter"></i>  1 Filter</div>
-      <div class="stat-value">18</div>
-      <div class="stat-item">Task Count</div>
-    </div>
-  </div>
-  <div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="stat-container">
-      <div class="stat-title">Overdue Tasks</div>
-      <div class="stat-filter"><i class="fa fa-filter"></i>  1 Filter</div>
-      <div class="stat-value">4</div>
-      <div class="stat-item">Task Count</div>
-    </div>
-  </div>
-  <div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="stat-container">
-      <div class="stat-title">Total Tasks</div>
-      <div class="stat-filter"><i class="fa fa-filter"></i>  1 Filter</div>
-      <div class="stat-value">118</div>
-      <div class="stat-item">Task Count</div>
-    </div>
-  </div>
-
 </div>
 <div class="row">
 <div class="col-md-12 col-sm-12 col-xs-12">

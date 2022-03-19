@@ -3,8 +3,6 @@
   display: flex;
 }
 .header {
-  //background: #252733;
-  //color: #FFF;
   height: 50px;
   display: flex;
   justify-content: space-between;
@@ -23,7 +21,7 @@
 
 }
 .sidebar-container {
-  background: #263544;
+  background: #000;
   min-height: 100vh;
   width: 15vw;
   .logo-container {

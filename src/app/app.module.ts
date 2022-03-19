@@ -9,12 +9,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ChartcontainerComponent } from './chartcontainer/chartcontainer.component';
 import { ChartModule } from 'angular2-chartjs';
+import { CardcontainerComponent } from './cardcontainer/cardcontainer.component';
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
     DashboardComponent,
-    ChartcontainerComponent
+    ChartcontainerComponent,
+    CardcontainerComponent
   ],
   imports: [
     ChartModule,
