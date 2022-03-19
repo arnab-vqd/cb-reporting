@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-// import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-// import { BaseChartDirective } from 'ng2-charts';
+import {
+  ContentControllerService,
+  SalesReportControllerService,
+  SalesReportRequestParams
+} from '../typescript-angular-client';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -9,22 +13,12 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 })
 export class DashboardComponent implements OnInit {
 
-  outletList: any = [
-    {
-      id: 1,
-      name: 'outlet 1'
-    },
-    {
-      id: 2,
-      name: 'outlet 2'
-    },
-    {
-      id: 3,
-      name: 'outlet 3'
-    }
-  ];
+  outletList: any = [];
+
   chartFilterForm: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+              private contentControllerService: ContentControllerService,
+              private salesReportControllerService: SalesReportControllerService) { }
 
   cardList: any = [{
     title: 'Food Sale',
@@ -59,14 +53,34 @@ export class DashboardComponent implements OnInit {
   }];
 
   ngOnInit() {
+
+    this.contentControllerService.getAllLocationsUsingGET().subscribe(obj => {
+      this.outletList = obj;
+    });
     this.chartFilterForm = this.fb.group({
-      outlet: [null],
-      amtQty: [''],
+      outlet: [[]],
+      amtQty: [false],
       total: [null],
       daysRange: [null],
       quarter: [null],
       customDate: [null]
     });
+
   }
 
+  fetchData() {
+    console.log(this.chartFilterForm);
+    const reportStartDate = '2022-01-01';
+    const reportToDate = '2022-01-03';
+    const value = this.chartFilterForm.value.amtQty ? 'Quantity' : 'Amount';
+    const outletList: any = [];
+    this.chartFilterForm.value.outlet.forEach( obj => {
+        outletList.push(obj.key);
+    });
+    const data: SalesReportRequestParams =  {compareLastYear: false, outlet: outletList.join(','),
+       startDate: reportStartDate, toDate: reportToDate, valueType: value };
+    this.salesReportControllerService.getReportBeverageUsingPOST( data).subscribe(response => {
+      console.log(response);
+    });
+  }
 }

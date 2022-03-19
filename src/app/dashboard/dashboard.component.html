@@ -1,59 +1,57 @@
 
-<!--<div class="sub-title-container">-->
-<!--  <ul class="sub-title-ul">-->
-<!--    <li>Overview</li>-->
-<!--    <li>List</li>-->
-<!--    <li>Board</li>-->
-<!--  </ul>-->
-<!--</div>-->
 <div class="form-container">
-  <form [formGroup]="chartFilterForm" class="row">
-
-    <div class="col-md-2 p-2">
-      <ng-select formControlName="outlet" placeholder="Select Outlet" multiple="true">
-        <ng-option *ngFor="let out of outletList" [value]="out.id">{{out.name}}</ng-option>
-      </ng-select>
-    </div>
-
-    <div class="col-md-2 p-2">
-      <ng-select formControlName="total" placeholder="Select Type">
-        <ng-option value="total">Total</ng-option>
-        <ng-option value="average">Average</ng-option>
-        <ng-option value="weekdays-avg">Weekdays Avg</ng-option>
-        <ng-option value="weekend-avg">Weekend Avg</ng-option>
-      </ng-select>
-    </div>
-    <div class="col-md-2 p-2">
-      <ng-select formControlName="daysRange" placeholder="Select Days">
-        <ng-option value="total">Last 10 Days</ng-option>
-        <ng-option value="average">Current Month</ng-option>
-        <ng-option value="weekdays-avg">Quarter</ng-option>
-<!--        <ng-option value="weekend-avg">Custom Dates</ng-option>-->
-      </ng-select>
-    </div>
-    <div class="col-md-2 p-2">
-      <ng-select formControlName="quarter" placeholder="Quarter">
-        <ng-option value="1">1</ng-option>
-        <ng-option value="2">2</ng-option>
-        <ng-option value="3">3</ng-option>
-        <ng-option value="4">4</ng-option>
-      </ng-select>
-    </div>
-    <div class="col-md-2 p-2">
-      <input type="submit" value="Submit" class="btn btn-success" />&nbsp;
-      <input type="button" value="Reset" class="btn btn-danger" />
-    </div>
-    <div class="col-md-3 p-3 ">
-      <div class="custom-control custom-switch">
-        <label class="" for="customSwitch1">Amount</label>
-        <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="amtQty">
-        <label class="custom-control-label" for="customSwitch1">Quantity</label>
+  <form [formGroup]="chartFilterForm" >
+    <div class="row">
+      <div class="col-md-4 p-2">
+        <ng-select [virtualScroll]="true" ro formControlName="outlet" placeholder="Select Outlet" multiple="true">
+          <ng-option *ngFor="let out of outletList" [value]="out">{{out.value}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-2 p-2">
+        <ng-select formControlName="total" placeholder="Select Type">
+          <ng-option value="total">Total</ng-option>
+          <ng-option value="average">Average</ng-option>
+          <ng-option value="weekdays-avg">Weekdays Avg</ng-option>
+          <ng-option value="weekend-avg">Weekend Avg</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-2 p-2">
+        <ng-select formControlName="daysRange" placeholder="Select Days">
+          <ng-option value="total">Last 10 Days</ng-option>
+          <ng-option value="average">Current Month</ng-option>
+          <ng-option value="weekdays-avg">Quarter</ng-option>
+  <!--        <ng-option value="weekend-avg">Custom Dates</ng-option>-->
+        </ng-select>
+      </div>
+      <div class="col-md-2 p-2">
+        <ng-select formControlName="quarter" placeholder="Quarter" hidden="true">
+          <ng-option value="1">1</ng-option>
+          <ng-option value="2">2</ng-option>
+          <ng-option value="3">3</ng-option>
+          <ng-option value="4">4</ng-option>
+        </ng-select>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-2 p-2">
+        <input type="submit" value="Submit" class="btn btn-success" (click)="fetchData()"/>&nbsp;
+        <input type="button" value="Reset" class="btn btn-danger" />
+      </div>
+      <div class="col-md-3 p-3 ">
+        <div class="custom-control custom-switch">
+          <label class="" for="customSwitch1">Quantity</label>
+          <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="amtQty">
+          <label class="custom-control-label" for="customSwitch1">Amount</label>
+        </div>
+      </div>
+
+    </div>
+
   </form>
 
 </div>
 <div class="row">
+  <div class="col-md-1"></div>
   <div class="col-md-2 col-sm-6 col-xs-12" *ngFor="let card of cardList">
     <app-cardcontainer [title]="card.title" [categoryIcon]="card.categoryIcon"
                        [categoryTitle]="card.categoryTitle" [count]="card.count"
@@ -61,8 +59,7 @@
   </div>
 </div>
 <div class="row">
-<div class="col-md-12 col-sm-12 col-xs-12">
-  <app-chart chart_label="Total Dine in Sale"></app-chart>
-</div>
-
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <app-chart chart_label="Total Dine in Sale"></app-chart>
+  </div>
 </div>

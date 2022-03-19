@@ -10,6 +10,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ChartcontainerComponent } from './chartcontainer/chartcontainer.component';
 import { ChartModule } from 'angular2-chartjs';
 import { CardcontainerComponent } from './cardcontainer/cardcontainer.component';
+
+import { ApiModule } from './typescript-angular-client';
+import {HttpClientModule} from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +29,9 @@ import { CardcontainerComponent } from './cardcontainer/cardcontainer.component'
     ReactiveFormsModule,
     NgbModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ApiModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
