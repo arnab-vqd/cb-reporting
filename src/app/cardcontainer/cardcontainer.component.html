@@ -1,6 +1,8 @@
   <div class="stat-container">
     <div class="stat-title">{{title}}</div>
-    <div class="stat-filter"><i class="{{categoryIcon}}"></i> {{categoryTitle}}</div>
+    <div class="stat-filter"><i class="{{categoryIcon}}"></i> Delivery
+      <div>{{deliveryCount| number : '1.2-2'}}</div>
+    </div>
     <div class="stat-value">{{count}}</div>
     <div class="stat-item">{{unitType}}</div>
   </div>

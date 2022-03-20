@@ -23,6 +23,18 @@ export class DashboardComponent implements OnInit {
   cardList: any = [];
   chartData = {dineIn: [0, 0, 0, 0, 0], delivery: [0, 0, 0, 0, 0]};
 
+  totalDineIn: any = 0;
+  totalDelivery: any = 0;
+  foodDineIn: any = 0;
+  foodDelivery: any = 0;
+  beverageDineIn: any = 0;
+  beverageDelivery: any = 0;
+  hookahDineIn: any = 0;
+  hookahDelivery: any = 0;
+  buffetDineIn: any = 0;
+  buffetDelivery: any = 0;
+  liquorDineIn: any = 0;
+  liquorDelivery: any = 0;
 
 
   ngOnInit() {
@@ -33,7 +45,7 @@ export class DashboardComponent implements OnInit {
     this.chartFilterForm = this.fb.group({
       outlet: [[]],
       amtQty: [false],
-      total: [null],
+      total: ['total'],
       daysRange: ['Quarter'],
       quarter: ['0'],
       customDate: [null]
@@ -45,8 +57,8 @@ export class DashboardComponent implements OnInit {
   fetchData() {
     console.log(this.chartFilterForm);
 
-    const quarterMonth = [0,3,6,9];
-    const quarterDays = [31,30,30,31];
+    const quarterMonth = [0, 3, 6, 9];
+    const quarterDays = [31, 30, 30, 31];
 
     let reportStartDate;
     let reportToDate;
@@ -54,7 +66,7 @@ export class DashboardComponent implements OnInit {
     console.log(this.chartFilterForm.value.daysRange);
     if (this.chartFilterForm.value.daysRange === 'Last 10 Days') {
       const currentDate = new Date();
-      reportStartDate = new Date(currentDate.getTime() - 10*24*60*60*1000).toISOString().split('T')[0];
+      reportStartDate = new Date(currentDate.getTime() - 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
       reportToDate = currentDate.toISOString().split('T')[0];
     } else if (this.chartFilterForm.value.daysRange === 'Current Month') {
       const currentDate = new Date();
@@ -74,7 +86,7 @@ export class DashboardComponent implements OnInit {
       reportToDate = '2022-01-03';
     }
 
-    const value = this.chartFilterForm.value.amtQty ? 'Quantity' : 'Amount';
+    const value = this.chartFilterForm.value.amtQty ? 'Mrp' : 'Quantity' ;
     const outletList: any = [];
     this.chartFilterForm.value.outlet.forEach( obj => {
         outletList.push(obj.key);
@@ -114,61 +126,60 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  totalDineIn: any = 0;
-  totalDelivery: any = 0;
-  foodDineIn: any = 0;
-  foodDelivery: any = 0;
-  beverageDineIn: any = 0;
-  beverageDelivery: any = 0;
-  hookahDineIn: any = 0;
-  hookahDelivery: any = 0;
-  buffetDineIn: any = 0;
-  buffetDelivery: any = 0;
-  liquorDineIn: any = 0;
-  liquorDelivery: any = 0;
+
 
   reCalculateCards() {
     this.chartData = {
-      dineIn: [this.totalDineIn, this.foodDineIn, this.beverageDineIn, this.hookahDineIn, this.buffetDineIn, this.liquorDineIn],
-      delivery: [this.totalDelivery, this.foodDelivery, this.beverageDelivery, this.hookahDelivery, this.buffetDelivery, this.liquorDelivery]
+      dineIn: [this.totalDineIn, this.foodDineIn, this.beverageDineIn, this.hookahDineIn,
+        this.buffetDineIn, this.liquorDineIn],
+      delivery: [this.totalDelivery, this.foodDelivery, this.beverageDelivery,
+        this.hookahDelivery, this.buffetDelivery, this.liquorDelivery]
     };
 
     this.cardList = [{
       title: 'Total Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: 'Delivery ('+this.totalDelivery+')',
+      categoryTitle: this.totalDelivery,
       count: this.totalDineIn,
-      unitType: 'Quantity'
-    },{
+      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
+    }, {
       title: 'Food Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: 'Delivery ('+this.foodDelivery+')',
+      categoryTitle: this.foodDelivery,
       count: this.foodDineIn,
-      unitType: 'Quantity'
+      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
     }, {
       title: 'Beverage Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: 'Delivery ('+this.beverageDelivery+')',
+      categoryTitle: this.beverageDelivery,
       count: this.beverageDineIn,
-      unitType: 'Quantity'
+      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
     }, {
       title: 'Hookah Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: 'Delivery ('+this.hookahDelivery+')',
+      categoryTitle: this.hookahDelivery,
       count: this.hookahDineIn,
-      unitType: 'Quantity'
+      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
     }, {
       title: 'Buffet Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: 'Delivery ('+this.buffetDelivery+')',
+      categoryTitle: this.buffetDelivery,
       count: this.buffetDineIn,
-      unitType: 'Quantity'
+      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
     }, {
       title: 'Liquor Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: 'Delivery ('+this.liquorDelivery+')',
+      categoryTitle: this.getValue(this.liquorDelivery),
       count: this.liquorDineIn,
-      unitType: 'Quantity'
+      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
     }];
+  }
+
+  getValue( obj) {
+    if (obj) {
+      return obj;
+    } else {
+      return 0;
+    }
   }
 }

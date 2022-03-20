@@ -16,7 +16,7 @@ export class CardcontainerComponent implements OnInit {
   categoryIcon;
 
   @Input()
-  categoryTitle;
+  deliveryCount;
 
   @Input()
   count;

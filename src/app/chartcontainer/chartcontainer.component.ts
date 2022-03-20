@@ -16,7 +16,7 @@ export class ChartcontainerComponent implements OnInit, OnChanges {
   chartData ;
 
   data;
-  updateChart(){
+  updateChart() {
     this.data = {
       labels: ['Total Sale', 'Food Sale', 'Beverage Sale', 'Hookah Sale', 'Buffet Sale', 'Liquor Sales'],
       datasets: [
