@@ -1,0 +1,19 @@
+.header {
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #2e3841;
+  .title h1 {
+    font-size: 25px;
+    padding: 10px 15px;
+    color: #fff;
+  }
+  .header-user-container {
+    padding: 10px 15px;
+    label {
+      padding: 0 10px;
+      font-size: 20px;
+      color: #fff;
+    }
+  }
+}

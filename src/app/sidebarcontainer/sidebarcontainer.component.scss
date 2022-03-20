@@ -1,0 +1,39 @@
+.sidebar-container {
+  background: #dfdfdf;
+  min-height: 100vh;
+  width: 15vw;
+  .logo-container {
+    padding: 5px 10px;
+    img {
+
+    }
+  }
+  ul {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li{
+      padding: 10px 20px 10px 40px;
+      a {
+        color: #000;
+        font-weight: normal;
+        text-decoration: none;
+        &:hover {
+          font-weight: bold;
+        }
+      }
+      &.no-link {
+        padding: 10px 20px 10px 20px;
+        a {
+          font-weight: 500;
+          &:hover {
+            font-weight: bold;
+
+          }
+        }
+      }
+
+    }
+  }
+}

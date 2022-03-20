@@ -13,6 +13,8 @@ import { CardcontainerComponent } from './cardcontainer/cardcontainer.component'
 
 import { ApiModule } from './typescript-angular-client';
 import {HttpClientModule} from '@angular/common/http';
+import { SidebarcontainerComponent } from './sidebarcontainer/sidebarcontainer.component';
+import { HeadercontainerComponent } from './headercontainer/headercontainer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import {HttpClientModule} from '@angular/common/http';
     LayoutComponent,
     DashboardComponent,
     ChartcontainerComponent,
-    CardcontainerComponent
+    CardcontainerComponent,
+    SidebarcontainerComponent,
+    HeadercontainerComponent
   ],
   imports: [
     ChartModule,

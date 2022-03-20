@@ -23,12 +23,12 @@ export class ChartcontainerComponent implements OnInit, OnChanges {
         {
           label: 'Dine in',
           data: this.chartData.dineIn,
-          backgroundColor: 'rgb(202 21 63)'
+          backgroundColor: '#2d2715'
         },
         {
           label: 'Delivery',
           data: this.chartData.delivery,
-          backgroundColor: 'rgb(6 126 246)'
+          backgroundColor: '#9bd328'
         }
       ]
     };

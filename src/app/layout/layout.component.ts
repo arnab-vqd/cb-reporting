@@ -7,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  pageTitle: any = 'Dashboard';
+  pageTitle: string;
+
   constructor() { }
 
   ngOnInit() {
+    this.pageTitle = 'Dashboard';
   }
 
 }

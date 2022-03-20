@@ -23,8 +23,10 @@ export class DashboardComponent implements OnInit {
   cardList: any = [];
   chartData = {dineIn: [0, 0, 0, 0, 0], delivery: [0, 0, 0, 0, 0]};
 
+
+
   ngOnInit() {
-    this.reCalculateCards();
+
     this.contentControllerService.getAllLocationsUsingGET().subscribe(obj => {
       this.outletList = obj;
     });
@@ -32,17 +34,46 @@ export class DashboardComponent implements OnInit {
       outlet: [[]],
       amtQty: [false],
       total: [null],
-      daysRange: [null],
-      quarter: [null],
+      daysRange: ['Quarter'],
+      quarter: ['0'],
       customDate: [null]
     });
+    this.fetchData();
 
   }
 
   fetchData() {
     console.log(this.chartFilterForm);
-    const reportStartDate = '2022-01-01';
-    const reportToDate = '2022-01-03';
+
+    const quarterMonth = [0,3,6,9];
+    const quarterDays = [31,30,30,31];
+
+    let reportStartDate;
+    let reportToDate;
+
+    console.log(this.chartFilterForm.value.daysRange);
+    if (this.chartFilterForm.value.daysRange === 'Last 10 Days') {
+      const currentDate = new Date();
+      reportStartDate = new Date(currentDate.getTime() - 10*24*60*60*1000).toISOString().split('T')[0];
+      reportToDate = currentDate.toISOString().split('T')[0];
+    } else if (this.chartFilterForm.value.daysRange === 'Current Month') {
+      const currentDate = new Date();
+      reportToDate = currentDate.toISOString().split('T')[0];
+      currentDate.setDate(1);
+      reportStartDate = currentDate.toISOString().split('T')[0];
+    } else if (this.chartFilterForm.value.daysRange === 'Quarter') {
+      const currentDate = new Date();
+      currentDate.setDate(1);
+      currentDate.setMonth(quarterMonth[this.chartFilterForm.value.quarter]);
+      reportStartDate = currentDate.toISOString().split('T')[0];
+      currentDate.setDate(quarterDays[this.chartFilterForm.value.quarter]);
+      currentDate.setMonth(quarterMonth[this.chartFilterForm.value.quarter] + 2);
+      reportToDate = currentDate.toISOString().split('T')[0];
+    } else {
+      reportStartDate = '2022-01-01';
+      reportToDate = '2022-01-03';
+    }
+
     const value = this.chartFilterForm.value.amtQty ? 'Quantity' : 'Amount';
     const outletList: any = [];
     this.chartFilterForm.value.outlet.forEach( obj => {
@@ -76,8 +107,15 @@ export class DashboardComponent implements OnInit {
       this.buffetDineIn = response['Buffet Sale DI'].key;
       this.reCalculateCards();
     });
+    this.salesReportControllerService.getReportTotalUsingPOST( data).subscribe(response => {
+      this.totalDelivery = response['Total Sale HD'].key;
+      this.totalDineIn = response['Total Sale DI'].key;
+      this.reCalculateCards();
+    });
   }
 
+  totalDineIn: any = 0;
+  totalDelivery: any = 0;
   foodDineIn: any = 0;
   foodDelivery: any = 0;
   beverageDineIn: any = 0;
@@ -91,37 +129,43 @@ export class DashboardComponent implements OnInit {
 
   reCalculateCards() {
     this.chartData = {
-      dineIn: [this.foodDineIn, this.beverageDineIn, this.hookahDineIn, this.buffetDineIn, this.liquorDineIn],
-      delivery: [this.foodDelivery, this.beverageDelivery, this.hookahDelivery, this.buffetDelivery, this.liquorDelivery]
+      dineIn: [this.totalDineIn, this.foodDineIn, this.beverageDineIn, this.hookahDineIn, this.buffetDineIn, this.liquorDineIn],
+      delivery: [this.totalDelivery, this.foodDelivery, this.beverageDelivery, this.hookahDelivery, this.buffetDelivery, this.liquorDelivery]
     };
 
     this.cardList = [{
+      title: 'Total Sale',
+      categoryIcon: 'fa fa-truck',
+      categoryTitle: 'Delivery ('+this.totalDelivery+')',
+      count: this.totalDineIn,
+      unitType: 'Quantity'
+    },{
       title: 'Food Sale',
-      categoryIcon: 'fa fa-glass',
+      categoryIcon: 'fa fa-truck',
       categoryTitle: 'Delivery ('+this.foodDelivery+')',
       count: this.foodDineIn,
       unitType: 'Quantity'
     }, {
       title: 'Beverage Sale',
-      categoryIcon: 'fa fa-glass',
+      categoryIcon: 'fa fa-truck',
       categoryTitle: 'Delivery ('+this.beverageDelivery+')',
       count: this.beverageDineIn,
       unitType: 'Quantity'
     }, {
       title: 'Hookah Sale',
-      categoryIcon: 'fa fa-glass',
+      categoryIcon: 'fa fa-truck',
       categoryTitle: 'Delivery ('+this.hookahDelivery+')',
       count: this.hookahDineIn,
       unitType: 'Quantity'
     }, {
       title: 'Buffet Sale',
-      categoryIcon: 'fa fa-glass',
+      categoryIcon: 'fa fa-truck',
       categoryTitle: 'Delivery ('+this.buffetDelivery+')',
       count: this.buffetDineIn,
       unitType: 'Quantity'
     }, {
       title: 'Liquor Sale',
-      categoryIcon: 'fa fa-glass',
+      categoryIcon: 'fa fa-truck',
       categoryTitle: 'Delivery ('+this.liquorDelivery+')',
       count: this.liquorDineIn,
       unitType: 'Quantity'
