@@ -21,20 +21,38 @@ export class DashboardComponent implements OnInit {
               private salesReportControllerService: SalesReportControllerService) { }
 
   cardList: any = [];
-  chartData = {dineIn: [0, 0, 0, 0, 0], delivery: [0, 0, 0, 0, 0]};
+  chartData:any = {dineIn: [0, 0, 0, 0, 0], delivery: [0, 0, 0, 0, 0]};
 
-  totalDineIn: any = 0;
-  totalDelivery: any = 0;
-  foodDineIn: any = 0;
-  foodDelivery: any = 0;
-  beverageDineIn: any = 0;
-  beverageDelivery: any = 0;
-  hookahDineIn: any = 0;
-  hookahDelivery: any = 0;
-  buffetDineIn: any = 0;
-  buffetDelivery: any = 0;
-  liquorDineIn: any = 0;
-  liquorDelivery: any = 0;
+  selectionData: any = {
+    totalDineIn: 0,
+    totalDelivery: 0,
+    foodDineIn: 0,
+    foodDelivery: 0,
+    beverageDineIn: 0,
+    beverageDelivery: 0,
+    hookahDineIn: 0,
+    hookahDelivery: 0,
+    buffetDineIn: 0,
+    buffetDelivery: 0,
+    liquorDineIn: 0,
+    liquorDelivery: 0
+  };
+
+  compareData: any = {
+    totalDineIn: 0,
+    totalDelivery: 0,
+    foodDineIn: 0,
+    foodDelivery: 0,
+    beverageDineIn: 0,
+    beverageDelivery: 0,
+    hookahDineIn: 0,
+    hookahDelivery: 0,
+    buffetDineIn: 0,
+    buffetDelivery: 0,
+    liquorDineIn: 0,
+    liquorDelivery: 0
+  };
+
 
 
   ngOnInit() {
@@ -44,11 +62,12 @@ export class DashboardComponent implements OnInit {
     });
     this.chartFilterForm = this.fb.group({
       outlet: [[]],
-      amtQty: [false],
       total: ['total'],
       daysRange: ['Quarter'],
       quarter: ['0'],
-      customDate: [null]
+      customDate: [null],
+      calculationType: [false],
+      compareLastYear: [false],
     });
     this.fetchData();
 
@@ -63,7 +82,6 @@ export class DashboardComponent implements OnInit {
     let reportStartDate;
     let reportToDate;
 
-    console.log(this.chartFilterForm.value.daysRange);
     if (this.chartFilterForm.value.daysRange === 'Last 10 Days') {
       const currentDate = new Date();
       reportStartDate = new Date(currentDate.getTime() - 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -86,92 +104,127 @@ export class DashboardComponent implements OnInit {
       reportToDate = '2022-01-03';
     }
 
-    const value = this.chartFilterForm.value.amtQty ? 'Mrp' : 'Quantity' ;
+    const value = this.chartFilterForm.value.calculationType ? 'Mrp' : 'Quantity' ;
     const outletList: any = [];
     this.chartFilterForm.value.outlet.forEach( obj => {
         outletList.push(obj.key);
     });
-    const data: SalesReportRequestParams =  {compareLastYear: false, outlet: outletList.join(','),
+    const data: SalesReportRequestParams =  {compareLastYear: this.chartFilterForm.value.compareLastYear, outlet: outletList.join(','),
        startDate: reportStartDate, toDate: reportToDate, valueType: value };
+
     this.salesReportControllerService.getReportFoodUsingPOST( data).subscribe(response => {
-      this.foodDelivery = response['Food Sale HD'].key;
-      this.foodDineIn = response['Food Sale DI'].key;
+      this.selectionData.foodDelivery = response['Food Sale HD'].key;
+      this.selectionData.foodDineIn = response['Food Sale DI'].key;
+      if (data.compareLastYear) {
+        this.compareData.foodDelivery = response['Food Sale HD LY'].key;
+        this.compareData.foodDineIn = response['Food Sale DI LY'].key;
+      }
       this.reCalculateCards();
     });
     this.salesReportControllerService.getReportBeverageUsingPOST( data).subscribe(response => {
-      this.beverageDelivery = response['Beverage Sale HD'].key;
-      this.beverageDineIn = response['Beverage Sale DI'].key;
+      this.selectionData.beverageDelivery = response['Beverage Sale HD'].key;
+      this.selectionData.beverageDineIn = response['Beverage Sale DI'].key;
+      if (data.compareLastYear) {
+        this.compareData.beverageDelivery = response['Beverage Sale HD LY'].key;
+        this.compareData.beverageDineIn = response['Beverage Sale DI LY'].key;
+      }
       this.reCalculateCards();
     });
     this.salesReportControllerService.getReportHookahUsingPOST( data).subscribe(response => {
-      this.hookahDelivery = response['Hookah Sale HD'].key;
-      this.hookahDineIn = response['Hookah Sale DI'].key;
+      this.selectionData.hookahDelivery = response['Hookah Sale HD'].key;
+      this.selectionData.hookahDineIn = response['Hookah Sale DI'].key;
+      if (data.compareLastYear) {
+        this.compareData.hookahDelivery = response['Hookah Sale HD LY'].key;
+        this.compareData.hookahDineIn = response['Hookah Sale DI LY'].key;
+      }
       this.reCalculateCards();
     });
     this.salesReportControllerService.getReportLiquorUsingPOST( data).subscribe(response => {
-      this.liquorDelivery = response['Liquor Sale HD'].key;
-      this.liquorDineIn = response['Liquor Sale DI'].key;
+      this.selectionData.liquorDelivery = response['Liquor Sale HD'].key;
+      this.selectionData.liquorDineIn = response['Liquor Sale DI'].key;
+      if (data.compareLastYear) {
+        this.compareData.liquorDelivery = response['Liquor Sale HD LY'].key;
+        this.compareData.liquorDineIn = response['Liquor Sale DI LY'].key;
+      }
       this.reCalculateCards();
     });
-
     this.salesReportControllerService.getReportBuffetUsingPOST( data).subscribe(response => {
-      this.buffetDelivery = response['Buffet Sale HD'].key;
-      this.buffetDineIn = response['Buffet Sale DI'].key;
+      this.selectionData.buffetDelivery = response['Buffet Sale HD'].key;
+      this.selectionData.buffetDineIn = response['Buffet Sale DI'].key;
+      if (data.compareLastYear) {
+        this.compareData.buffetDelivery = response['Buffet Sale HD LY'].key;
+        this.compareData.buffetDineIn = response['Buffet Sale DI LY'].key;
+      }
       this.reCalculateCards();
     });
     this.salesReportControllerService.getReportTotalUsingPOST( data).subscribe(response => {
-      this.totalDelivery = response['Total Sale HD'].key;
-      this.totalDineIn = response['Total Sale DI'].key;
+      this.selectionData.totalDelivery = response['Total Sale HD'].key;
+      this.selectionData.totalDineIn = response['Total Sale DI'].key;
+      if (data.compareLastYear) {
+        this.compareData.totalDelivery = response['Total Sale HD LY'].key;
+        this.compareData.totalDineIn = response['Total Sale DI LY'].key;
+      }
       this.reCalculateCards();
     });
   }
 
-
-
   reCalculateCards() {
-    this.chartData = {
-      dineIn: [this.totalDineIn, this.foodDineIn, this.beverageDineIn, this.hookahDineIn,
-        this.buffetDineIn, this.liquorDineIn],
-      delivery: [this.totalDelivery, this.foodDelivery, this.beverageDelivery,
-        this.hookahDelivery, this.buffetDelivery, this.liquorDelivery]
-    };
+    if (this.chartFilterForm.value.compareLastYear) {
+      this.chartData = {
+        dineIn: [this.selectionData.totalDineIn, this.selectionData.foodDineIn, this.selectionData.beverageDineIn,
+          this.selectionData.hookahDineIn, this.selectionData.buffetDineIn, this.selectionData.liquorDineIn],
+        delivery: [this.selectionData.totalDelivery, this.selectionData.foodDelivery, this.selectionData.beverageDelivery,
+          this.selectionData.hookahDelivery, this.selectionData.buffetDelivery, this.selectionData.liquorDelivery],
+        dineInCompare: [this.compareData.totalDineIn, this.compareData.foodDineIn, this.compareData.beverageDineIn,
+          this.compareData.hookahDineIn, this.compareData.buffetDineIn, this.compareData.liquorDineIn],
+        deliveryCompare: [this.compareData.totalDelivery, this.compareData.foodDelivery, this.compareData.beverageDelivery,
+          this.compareData.hookahDelivery, this.compareData.buffetDelivery, this.compareData.liquorDelivery]
+      };
+    } else {
+      this.chartData = {
+        dineIn: [this.selectionData.totalDineIn, this.selectionData.foodDineIn, this.selectionData.beverageDineIn,
+          this.selectionData.hookahDineIn, this.selectionData.buffetDineIn, this.selectionData.liquorDineIn],
+        delivery: [this.selectionData.totalDelivery, this.selectionData.foodDelivery, this.selectionData.beverageDelivery,
+          this.selectionData.hookahDelivery, this.selectionData.buffetDelivery, this.selectionData.liquorDelivery]
+      };
+    }
 
     this.cardList = [{
       title: 'Total Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: this.totalDelivery,
-      count: this.totalDineIn,
-      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
+      categoryTitle: this.selectionData.totalDelivery,
+      count: this.selectionData.totalDineIn,
+      unitType: this.chartFilterForm.value.calculationType ? 'Amount' : 'Quantity'
     }, {
       title: 'Food Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: this.foodDelivery,
-      count: this.foodDineIn,
-      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
+      categoryTitle: this.selectionData.foodDelivery,
+      count: this.selectionData.foodDineIn,
+      unitType: this.chartFilterForm.value.calculationType ? 'Amount' : 'Quantity'
     }, {
       title: 'Beverage Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: this.beverageDelivery,
-      count: this.beverageDineIn,
-      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
+      categoryTitle: this.selectionData.beverageDelivery,
+      count: this.selectionData.beverageDineIn,
+      unitType: this.chartFilterForm.value.calculationType ? 'Amount' : 'Quantity'
     }, {
       title: 'Hookah Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: this.hookahDelivery,
-      count: this.hookahDineIn,
-      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
+      categoryTitle: this.selectionData.hookahDelivery,
+      count: this.selectionData.hookahDineIn,
+      unitType: this.chartFilterForm.value.calculationType ? 'Amount' : 'Quantity'
     }, {
       title: 'Buffet Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: this.buffetDelivery,
-      count: this.buffetDineIn,
-      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
+      categoryTitle: this.selectionData.buffetDelivery,
+      count: this.selectionData.buffetDineIn,
+      unitType: this.chartFilterForm.value.calculationType ? 'Amount' : 'Quantity'
     }, {
       title: 'Liquor Sale',
       categoryIcon: 'fa fa-truck',
-      categoryTitle: this.getValue(this.liquorDelivery),
-      count: this.liquorDineIn,
-      unitType: this.chartFilterForm.value.amtQty ? 'Amount' : 'Quantity'
+      categoryTitle: this.getValue(this.selectionData.liquorDelivery),
+      count: this.selectionData.liquorDineIn,
+      unitType: this.chartFilterForm.value.calculationType ? 'Amount' : 'Quantity'
     }];
   }
 
