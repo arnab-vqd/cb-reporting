@@ -13,8 +13,9 @@ import {
 })
 export class DashboardComponent implements OnInit {
 
-  outletList: any = [];
   cityList: any = [];
+  outletList: any = [];
+
   chartFilterForm: FormGroup;
   constructor(private fb: FormBuilder,
               private contentControllerService: ContentControllerService,
@@ -53,25 +54,37 @@ export class DashboardComponent implements OnInit {
     liquorDelivery: 0
   };
 
-
-
-  ngOnInit() {
+  fetchCity() {
     this.contentControllerService.getAllCitiesUsingGET().subscribe(obj => {
       this.cityList = obj;
+      this.fetchOutlets();
     });
-    this.contentControllerService.getAllLocationsUsingGET('').subscribe(obj => {
+  }
+
+  fetchOutlets() {
+
+    const city = this.chartFilterForm.value.city;
+    this.contentControllerService.getAllLocationsUsingGET(city ? city.key : '').subscribe(obj => {
       this.outletList = obj;
     });
+  }
+
+  ngOnInit() {
+
     this.chartFilterForm = this.fb.group({
-      outlet: [[]],
+      city: [],
+      outlet: [],
+      saleType: ['totalSale'],
       total: ['total'],
       daysRange: ['CurrentMonth'],
       quarter: ['0'],
-      customDate: [null],
+      customDateStart: [''],
+      customDateEnd: [''],
       calculationType: [false],
       compareLastYear: [false],
       customDate2: []
     });
+    this.fetchCity();
     // this.fetchData();
 
   }
@@ -83,11 +96,13 @@ export class DashboardComponent implements OnInit {
     let reportStartDate;
     let reportToDate;
 
-    if (this.chartFilterForm.value.daysRange === 'Last 10 Days') {
-      const currentDate = new Date();
-      reportStartDate = new Date(currentDate.getTime() - 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-      reportToDate = currentDate.toISOString().split('T')[0];
-    } else if (this.chartFilterForm.value.daysRange === 'Current Month') {
+    // if (this.chartFilterForm.value.daysRange === 'Last 10 Days') {
+    //   const currentDate = new Date();
+    //   reportStartDate = new Date(currentDate.getTime() - 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    //   reportToDate = currentDate.toISOString().split('T')[0];
+    // } else
+
+    if (this.chartFilterForm.value.daysRange === 'Current Month') {
       const currentDate = new Date();
       reportToDate = currentDate.toISOString().split('T')[0];
       currentDate.setDate(1);
@@ -100,6 +115,9 @@ export class DashboardComponent implements OnInit {
       currentDate.setDate(quarterDays[this.chartFilterForm.value.quarter]);
       currentDate.setMonth(quarterMonth[this.chartFilterForm.value.quarter] + 2);
       reportToDate = currentDate.toISOString().split('T')[0];
+    } else if (this.chartFilterForm.value.daysRange === 'CustomDate') {
+      reportStartDate = new Date(this.chartFilterForm.value.customDateStart).toISOString();
+      reportToDate = new Date(this.chartFilterForm.value.customDateEnd).toISOString();
     } else {
       reportStartDate = '2022-01-01';
       reportToDate = '2022-01-03';
@@ -107,9 +125,16 @@ export class DashboardComponent implements OnInit {
 
     const value = this.chartFilterForm.value.calculationType ? 'Mrp' : 'Quantity' ;
     const outletList: any = [];
-    this.chartFilterForm.value.outlet.forEach( obj => {
+    if(this.chartFilterForm.value.outlet) {
+      this.chartFilterForm.value.outlet.forEach( obj => {
         outletList.push(obj.key);
-    });
+      });
+    } else {
+      this.outletList.forEach( obj => {
+        outletList.push(obj.key);
+      });
+    }
+
     const data: SalesReportRequestParams =  {compareLastYear: this.chartFilterForm.value.compareLastYear, outlet: outletList.join(','),
        startDate: reportStartDate, toDate: reportToDate, valueType: value };
 
