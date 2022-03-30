@@ -14,14 +14,14 @@ import {
 export class DashboardComponent implements OnInit {
 
   outletList: any = [];
-
+  cityList: any = [];
   chartFilterForm: FormGroup;
   constructor(private fb: FormBuilder,
               private contentControllerService: ContentControllerService,
               private salesReportControllerService: SalesReportControllerService) { }
 
   cardList: any = [];
-  chartData:any = {dineIn: [0, 0, 0, 0, 0], delivery: [0, 0, 0, 0, 0]};
+  chartData: any = {dineIn: [0, 0, 0, 0, 0], delivery: [0, 0, 0, 0, 0]};
 
   selectionData: any = {
     totalDineIn: 0,
@@ -56,26 +56,27 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
-
-    this.contentControllerService.getAllLocationsUsingGET().subscribe(obj => {
+    this.contentControllerService.getAllCitiesUsingGET().subscribe(obj => {
+      this.cityList = obj;
+    });
+    this.contentControllerService.getAllLocationsUsingGET('').subscribe(obj => {
       this.outletList = obj;
     });
     this.chartFilterForm = this.fb.group({
       outlet: [[]],
       total: ['total'],
-      daysRange: ['Quarter'],
+      daysRange: ['CurrentMonth'],
       quarter: ['0'],
       customDate: [null],
       calculationType: [false],
       compareLastYear: [false],
+      customDate2: []
     });
-    this.fetchData();
+    // this.fetchData();
 
   }
 
   fetchData() {
-    console.log(this.chartFilterForm);
-
     const quarterMonth = [0, 3, 6, 9];
     const quarterDays = [31, 30, 30, 31];
 

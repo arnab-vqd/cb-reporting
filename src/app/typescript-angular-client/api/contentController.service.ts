@@ -57,6 +57,42 @@ export class ContentControllerService {
 
 
     /**
+     * getAllCities
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAllCitiesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<KeyValue>>;
+    public getAllCitiesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<KeyValue>>>;
+    public getAllCitiesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<KeyValue>>>;
+    public getAllCitiesUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<KeyValue>>(`${this.basePath}/sales/getAllCities`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * getAllDepartments
      *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -131,13 +167,23 @@ export class ContentControllerService {
     /**
      * getAllLocations
      *
+     * @param cityID cityID
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllLocationsUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<KeyValue>>;
-    public getAllLocationsUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<KeyValue>>>;
-    public getAllLocationsUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<KeyValue>>>;
-    public getAllLocationsUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllLocationsUsingGET(cityID: string, observe?: 'body', reportProgress?: boolean): Observable<Array<KeyValue>>;
+    public getAllLocationsUsingGET(cityID: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<KeyValue>>>;
+    public getAllLocationsUsingGET(cityID: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<KeyValue>>>;
+    public getAllLocationsUsingGET(cityID: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (cityID === null || cityID === undefined) {
+            throw new Error('Required parameter cityID was null or undefined when calling getAllLocationsUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (cityID !== undefined && cityID !== null) {
+            queryParameters = queryParameters.set('cityID', <any>cityID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -156,6 +202,7 @@ export class ContentControllerService {
 
         return this.httpClient.get<Array<KeyValue>>(`${this.basePath}/sales/getAllLocations`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

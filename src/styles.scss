@@ -2,3 +2,14 @@
 @import "assets/bootstrap.min.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "assets/font-awesome-4.7.0/css/font-awesome.css";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.mat-form-field-infix {
+  padding: 0 !important;
+}
+.mat-form-field-flex{
+  padding: 0 6px !important;
+}

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,11 @@ import {HttpClientModule} from '@angular/common/http';
 import { SidebarcontainerComponent } from './sidebarcontainer/sidebarcontainer.component';
 import { HeadercontainerComponent } from './headercontainer/headercontainer.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatNativeDateModule} from '@angular/material/core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +29,7 @@ import { HeadercontainerComponent } from './headercontainer/headercontainer.comp
     ChartcontainerComponent,
     CardcontainerComponent,
     SidebarcontainerComponent,
-    HeadercontainerComponent
+    HeadercontainerComponent,
   ],
   imports: [
     ChartModule,
@@ -36,8 +41,11 @@ import { HeadercontainerComponent } from './headercontainer/headercontainer.comp
     AppRoutingModule,
     ApiModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule, MatDatepickerModule, MatInputModule
   ],
   providers: [],
+  schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
