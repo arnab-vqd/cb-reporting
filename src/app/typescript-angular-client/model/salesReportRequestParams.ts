@@ -12,9 +12,11 @@
 
 
 export interface SalesReportRequestParams { 
-    compareLastYear?: boolean;
+    compareLastYear?: string;
+    compareStartDate?: string;
+    compareToDate?: string;
     outlet?: string;
+    saleType?: string;
     startDate?: string;
     toDate?: string;
-    valueType?: string;
 }

@@ -1,8 +1,8 @@
   <div class="stat-container">
     <div class="stat-title">{{title}}</div>
-    <div class="stat-filter">
-      <i class="{{categoryIcon}}"></i> {{deliveryCount| number : '1.2-2'}}
-    </div>
-    <div class="stat-value">{{count| number : '1.2-2'}}</div>
-    <div class="stat-item">{{unitType}}</div>
+    <div class="stat-filter" *ngIf="difference">
+      {{compareValue| number : '1.0-2'}}(<i class="{{icon}}">{{difference/compareValue| percent : '1.2-2'}}</i>)
+    </div><div *ngIf="!difference">&nbsp;</div>
+    <div class="stat-value">{{categoryValue| number : '1.0-2'}}</div>
+    <div class="stat-item">{{categoryValue/totalValue | percent : '1.2-2'}}</div>
   </div>

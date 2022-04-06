@@ -13,18 +13,25 @@ export class CardcontainerComponent implements OnInit {
   title;
 
   @Input()
-  categoryIcon;
+  totalValue;
 
   @Input()
-  deliveryCount;
+  categoryValue;
 
   @Input()
-  count;
+  compareValue;
 
-  @Input()
-  unitType;
+  difference = 0;
+  icon = 'fa fa-arrow-up green';
 
   ngOnInit() {
+    if (this.compareValue && this.categoryValue) {
+      this.difference = this.categoryValue - this.compareValue;
+      if (this.difference < 0) {
+        this.icon = 'fa fa-arrow-down red';
+      }
+    }
+
   }
 
 }

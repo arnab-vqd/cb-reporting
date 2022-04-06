@@ -22,34 +22,18 @@ export class ChartcontainerComponent implements OnInit, OnChanges {
       datasets: []
     };
     this.data.datasets.push({
-      label: 'Dine in',
-      data: this.chartData.dineIn,
+      label: 'Current Year',
+      data: this.chartData.thisYear,
       backgroundColor: '#2d2715',
       stack: 'Stack 0',
     });
     this.data.datasets.push({
-      label: 'Delivery',
-      data: this.chartData.delivery,
+      label: 'Last Year',
+      data: this.chartData.compareYear,
       backgroundColor: '#9bd328',
-      stack: 'Stack 0',
+      stack: 'Stack 1',
     });
 
-    if (this.chartData.dineInCompare) {
-      this.data.datasets.push({
-        label: 'Dine in (Last Year)',
-        data: this.chartData.dineInCompare,
-        backgroundColor: '#302712',
-        stack: 'Stack 1',
-      });
-    }
-    if (this.chartData.deliveryCompare) {
-      this.data.datasets.push({
-        label: 'Delivery (Last Year)',
-        data: this.chartData.deliveryCompare,
-        backgroundColor: '#28d3b9',
-        stack: 'Stack 1',
-      });
-    }
   }
 
   options = {
@@ -57,6 +41,14 @@ export class ChartcontainerComponent implements OnInit, OnChanges {
     maintainAspectRatio: false,
     legend: {
       position: 'top' // place legend on the right side of chart
+    },
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: 'rgb(255, 99, 132)'
+        }
+      }
     },
     scales: {
       xAxes: [{
