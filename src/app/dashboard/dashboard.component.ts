@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
       city: [],
       outlet: [],
       saleType: ['totalSale'],
-      total: ['total'],
+      saleMode: ['total'],
       daysRange: ['CurrentMonth'],
       quarter: ['0'],
       customDateStart: [''],
@@ -118,6 +118,7 @@ export class DashboardComponent implements OnInit {
 
     const data: SalesReportRequestParams =  {
       saleType: this.chartFilterForm.value.saleType,
+      saleMode: this.chartFilterForm.value.saleMode,
       outlet: outletList.join(','),
       startDate: reportStartDate,
       toDate: reportToDate,

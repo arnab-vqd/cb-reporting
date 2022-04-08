@@ -16,6 +16,7 @@ export interface SalesReportRequestParams {
     compareStartDate?: string;
     compareToDate?: string;
     outlet?: string;
+    saleMode?: string;
     saleType?: string;
     startDate?: string;
     toDate?: string;
