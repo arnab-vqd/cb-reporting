@@ -59,13 +59,23 @@ export class ContentControllerService {
     /**
      * getAllCities
      *
+     * @param companies companies
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllCitiesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<KeyValue>>;
-    public getAllCitiesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<KeyValue>>>;
-    public getAllCitiesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<KeyValue>>>;
-    public getAllCitiesUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllCitiesUsingGET(companies: string, observe?: 'body', reportProgress?: boolean): Observable<Array<KeyValue>>;
+    public getAllCitiesUsingGET(companies: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<KeyValue>>>;
+    public getAllCitiesUsingGET(companies: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<KeyValue>>>;
+    public getAllCitiesUsingGET(companies: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (companies === null || companies === undefined) {
+            throw new Error('Required parameter companies was null or undefined when calling getAllCitiesUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (companies !== undefined && companies !== null) {
+            queryParameters = queryParameters.set('companies', <any>companies);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -84,6 +94,7 @@ export class ContentControllerService {
 
         return this.httpClient.get<Array<KeyValue>>(`${this.basePath}/sales/getAllCities`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -238,6 +249,42 @@ export class ContentControllerService {
         ];
 
         return this.httpClient.get<Array<KeyValue>>(`${this.basePath}/sales/getAllUsers`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * getCompanyList
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getCompanyListUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<string>>;
+    public getCompanyListUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<string>>>;
+    public getCompanyListUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<string>>>;
+    public getCompanyListUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<string>>(`${this.basePath}/sales/getCompanyList`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

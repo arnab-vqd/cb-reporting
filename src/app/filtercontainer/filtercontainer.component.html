@@ -1,0 +1,116 @@
+<div class="form-container">
+  <div ><i class="fa fa-filter" (click)="toggleFilterDisplay()"></i></div>
+  <form [formGroup]="chartFilterForm" [hidden]="!displayFilter">
+    <div class="row">
+      <div class="col-md-3 ">
+        Company
+        <ng-select formControlName="company" placeholder="Select Company" (change)="fetchCity()" >
+          <ng-option *ngFor="let out of companyList" [value]="out">{{out}}</ng-option>
+        </ng-select>
+      </div>
+
+      <div class="col-md-3 ">
+        Location
+        <ng-select formControlName="city" placeholder="Select City" (change)="fetchOutlets()" >
+          <ng-option *ngFor="let out of cityList" [value]="out">{{out.value}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-3 ">
+        Outlets
+        <ng-select formControlName="outlet" placeholder="Select Outlet" multiple="true">
+          <ng-option *ngFor="let out of outletList" [value]="out">{{out.value}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-3 ">
+        Sale Type
+        <ng-select formControlName="saleType" placeholder="Select Sale Type" >
+          <ng-option value="totalSale">Total Sale</ng-option>
+          <ng-option value="dineInSale">Dine In Sale</ng-option>
+          <ng-option value="deliverySale">Delivery Sale</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-3 ">
+        Mode
+        <ng-select formControlName="saleMode" placeholder="Select Type">
+          <ng-option value="total">Absolute</ng-option>
+          <ng-option value="average">Average</ng-option>
+          <ng-option value="2,3,4,5,6">Weekdays Avg</ng-option>
+          <ng-option value="1,7">Weekend Avg</ng-option>
+        </ng-select>
+      </div>
+    </div>
+    <div class="row pt-2">
+      <div class="col-md-3 ">
+        Select Date
+        <ng-select formControlName="daysRange" placeholder="Select Days">
+          <ng-option value="Current Month">Current Month</ng-option>
+          <ng-option value="Quarter">Quarter</ng-option>
+          <ng-option value="CustomDate">Custom Dates</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-3 " >
+        <BR>
+        <ng-select formControlName="quarter" placeholder="Select Quarter" *ngIf="chartFilterForm.value.daysRange == 'Quarter'">
+          <ng-option value="0">Q1</ng-option>
+          <ng-option value="1">Q2</ng-option>
+          <ng-option value="2">Q3</ng-option>
+          <ng-option value="3">Q4</ng-option>
+        </ng-select>
+        <div class="row" *ngIf="chartFilterForm.value.daysRange == 'CustomDate'">
+          <div class="col-md-6 p-0">
+            <mat-form-field appearance="outline">
+              <input matInput [matDatepicker]="picker1" formControlName="customDateStart">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 p-0">
+            <mat-form-field appearance="outline">
+              <input matInput [matDatepicker]="picker2" formControlName="customDateEnd">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-3 ">
+        Compare with
+        <ng-select formControlName="compareLastYear" placeholder="Compare With">
+          <ng-option value="Same Last Year">Same Last Year</ng-option>
+          <ng-option value="CustomDate">Custom Date</ng-option>
+        </ng-select>
+      </div>
+
+      <div class="col-md-3 " >
+        <BR>
+        <div class="row" *ngIf="chartFilterForm.value.compareLastYear == 'CustomDate'">
+          <div class="col-md-6 p-0">
+            <mat-form-field appearance="outline">
+              <input matInput [matDatepicker]="picker1" formControlName="compareStartDate">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 p-0">
+            <mat-form-field appearance="outline">
+              <input matInput [matDatepicker]="picker2" formControlName="compareEndDate">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-3 p-2">
+        <input type="submit" value="Submit" class="btn btn-success" (click)="onSubmit()"/>&nbsp;
+        <input type="button" value="Reset" class="btn btn-danger" />
+      </div>
+
+    </div>
+  </form>
+</div>
+

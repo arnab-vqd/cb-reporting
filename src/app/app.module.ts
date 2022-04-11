@@ -21,6 +21,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { FiltercontainerComponent } from './filtercontainer/filtercontainer.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     CardcontainerComponent,
     SidebarcontainerComponent,
     HeadercontainerComponent,
+    FiltercontainerComponent,
   ],
   imports: [
     ChartModule,
