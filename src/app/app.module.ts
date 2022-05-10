@@ -20,8 +20,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { FiltercontainerComponent } from './filtercontainer/filtercontainer.component';
+import {CardcontainercustomerComponent} from './cardcontainercustomer/cardcontainercustomer.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FiltercontainerComponent } from './filtercontainer/filtercontainer.comp
     SidebarcontainerComponent,
     HeadercontainerComponent,
     FiltercontainerComponent,
+    CardcontainercustomerComponent
   ],
   imports: [
     ChartModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {
   SalesReportControllerService,
   SalesReportRequestParams
@@ -12,6 +12,10 @@ import {
 export class DashboardComponent implements OnInit {
 
   loading;
+
+  totalPax;
+  billCount;
+  customers;
 
   constructor(private salesReportControllerService: SalesReportControllerService) { }
 
@@ -41,6 +45,8 @@ export class DashboardComponent implements OnInit {
       liquor: 0
     };
   }
+
+
 
   ngOnInit() {
     this.resetData();
@@ -103,6 +109,8 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+
+
   applyFilterData(filterData: any) {
     this.loading = true;
 
@@ -141,12 +149,21 @@ export class DashboardComponent implements OnInit {
       compareToDate: this.convertToDate(filterData.compareEndDate)
     };
 
+
     this.salesReportControllerService.getPaxUsingPOST(data).subscribe(response => {
-      console.log(response);
+      this.totalPax = response;
+      console.log('totalPax'+this.totalPax);
     });
 
     this.salesReportControllerService.getNoOfBillsUsingPOST(data).subscribe(response => {
-      console.log(response);
+      this.billCount = response;
+      console.log('billCount'+this.billCount);
+    });
+
+    this.salesReportControllerService.getNoOfCustomersUsingPOST(data).subscribe(response => {
+      this.customers = response;
+      console.log('customers'+this.customers);
+
     });
 
     this.salesReportControllerService.getReportUsingPOST(data).subscribe(response => {
