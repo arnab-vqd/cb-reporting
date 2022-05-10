@@ -58,6 +58,53 @@ export class SalesReportControllerService {
 
 
     /**
+     * getNoOfBills
+     *
+     * @param params params
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getNoOfBillsUsingPOST(params: SalesReportRequestParams, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public getNoOfBillsUsingPOST(params: SalesReportRequestParams, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public getNoOfBillsUsingPOST(params: SalesReportRequestParams, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public getNoOfBillsUsingPOST(params: SalesReportRequestParams, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (params === null || params === undefined) {
+            throw new Error('Required parameter params was null or undefined when calling getNoOfBillsUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<number>(`${this.basePath}/sales/getNoOfBills`,
+            params,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * getPax
      *
      * @param params params

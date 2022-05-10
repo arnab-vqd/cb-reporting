@@ -141,6 +141,14 @@ export class DashboardComponent implements OnInit {
       compareToDate: this.convertToDate(filterData.compareEndDate)
     };
 
+    this.salesReportControllerService.getPaxUsingPOST(data).subscribe(response => {
+      console.log(response);
+    });
+
+    this.salesReportControllerService.getNoOfBillsUsingPOST(data).subscribe(response => {
+      console.log(response);
+    });
+
     this.salesReportControllerService.getReportUsingPOST(data).subscribe(response => {
       this.resetData();
       this.selectionData.total = response['Total Sale'].key;

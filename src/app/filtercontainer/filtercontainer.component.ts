@@ -44,7 +44,7 @@ export class FiltercontainerComponent implements OnInit {
 
   fetchOutlets() {
     const city = this.chartFilterForm.value.city;
-    this.contentControllerService.getAllLocationsUsingGET(city ? city.key : '').subscribe(obj => {
+    this.contentControllerService.getAllLocationsUsingGET(city ? city.key : '', this.getCompanySelected()).subscribe(obj => {
       this.outletList = obj;
     });
   }

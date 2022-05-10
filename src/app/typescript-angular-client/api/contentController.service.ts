@@ -179,21 +179,29 @@ export class ContentControllerService {
      * getAllLocations
      *
      * @param cityID cityID
+     * @param companies companies
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllLocationsUsingGET(cityID: string, observe?: 'body', reportProgress?: boolean): Observable<Array<KeyValue>>;
-    public getAllLocationsUsingGET(cityID: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<KeyValue>>>;
-    public getAllLocationsUsingGET(cityID: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<KeyValue>>>;
-    public getAllLocationsUsingGET(cityID: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllLocationsUsingGET(cityID: string, companies: string, observe?: 'body', reportProgress?: boolean): Observable<Array<KeyValue>>;
+    public getAllLocationsUsingGET(cityID: string, companies: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<KeyValue>>>;
+    public getAllLocationsUsingGET(cityID: string, companies: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<KeyValue>>>;
+    public getAllLocationsUsingGET(cityID: string, companies: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (cityID === null || cityID === undefined) {
             throw new Error('Required parameter cityID was null or undefined when calling getAllLocationsUsingGET.');
         }
 
+        if (companies === null || companies === undefined) {
+            throw new Error('Required parameter companies was null or undefined when calling getAllLocationsUsingGET.');
+        }
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (cityID !== undefined && cityID !== null) {
             queryParameters = queryParameters.set('cityID', <any>cityID);
+        }
+        if (companies !== undefined && companies !== null) {
+            queryParameters = queryParameters.set('companies', <any>companies);
         }
 
         let headers = this.defaultHeaders;
