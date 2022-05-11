@@ -1,8 +1,4 @@
   <div class="stat-container">
     <div class="stat-title">{{title}}</div>
-<!--    <div class="stat-filter" *ngIf="difference">-->
-<!--      {{compareValue| number : '1.0-0'}}(<i class="{{icon}}">{{difference/compareValue| percent : '1.2-2'}}</i>)-->
-<!--    </div><div *ngIf="!difference">&nbsp;</div>-->
-<!--    <div class="stat-value">{{categoryValue| number : '1.0-0'}}</div>-->
-<!--    <div class="stat-item">{{categoryValue/totalValue | percent : '1.2-2'}}</div>-->
+    <chart [type]="type" [data]="data" [options]="options" class="chart-content" style="height: 90%" ></chart>
   </div>

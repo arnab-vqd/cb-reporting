@@ -57,6 +57,24 @@ export class ChartcontainerComponent implements OnInit, OnChanges {
       yAxes: [{
         stacked: true // this also..
       }]
+    },
+    animation: {
+      duration: 1,
+      onComplete() {
+        const chartInstance = this.chart,
+          ctx = chartInstance.ctx;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+        ctx.textBaseline = 'bottom';
+        // Loop through each data in the datasets
+        this.data.datasets.forEach((dataset, i) => {
+          const meta = chartInstance.controller.getDatasetMeta(i);
+          meta.data.forEach((bar, index) => {
+            const data = dataset.data[index];
+            ctx.fillText(parseInt(data), bar._model.x, bar._model.y - 5);
+          });
+        });
+      }
     }
   };
   constructor() { }

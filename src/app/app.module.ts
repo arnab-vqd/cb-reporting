@@ -34,7 +34,7 @@ import {CardcontainercustomerComponent} from './cardcontainercustomer/cardcontai
     SidebarcontainerComponent,
     HeadercontainerComponent,
     FiltercontainerComponent,
-    CardcontainercustomerComponent
+    CardcontainercustomerComponent,
   ],
   imports: [
     ChartModule,
