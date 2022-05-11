@@ -137,6 +137,12 @@ export class DashboardComponent implements OnInit {
       reportToDate = this.convertToDate(filterData.customDateEnd);
     }
 
+    if (filterData.saleMode === 'average') {
+      filterData.saleMode = '1,2,3,4,5,6,7';
+    } else if (filterData.saleMode === 'weekdays') {
+      filterData.saleMode = filterData.saleModeDays.join(',');
+    }
+
     const data: SalesReportRequestParams =  {
       saleType: filterData.saleType,
       saleMode: filterData.saleMode,

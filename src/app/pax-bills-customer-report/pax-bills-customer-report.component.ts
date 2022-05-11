@@ -49,6 +49,7 @@ export class PaxBillsCustomerReportComponent implements OnInit {
           'PAX',
           'BILLS',
           'AVERAGE PER CUSTOMER',
+          'AVERAGE PER BILL'
         ],
 
       },
@@ -71,13 +72,17 @@ export class PaxBillsCustomerReportComponent implements OnInit {
       },
       series: [
         {
-          data: [this.totalPax[0], this.billCount[0], parseInt(String(this.customers[2] / this.customers[0]))],
+          data: [this.totalPax[0], this.billCount[0],
+            parseInt(String(this.customers[2] / this.customers[0])),
+            parseInt(String(this.customers[2] / this.billCount[0]))],
           type: 'column',
           dataLabels: {
             enabled: true,
           }
         }, {
-          data: [this.totalPax[1], this.billCount[1], parseInt(String(this.customers[3] / this.customers[1]))],
+          data: [this.totalPax[1], this.billCount[1],
+            parseInt(String(this.customers[3] / this.customers[1])),
+            parseInt(String(this.customers[3] / this.billCount[1]))],
           type: 'column',
           dataLabels: {
             enabled: true,

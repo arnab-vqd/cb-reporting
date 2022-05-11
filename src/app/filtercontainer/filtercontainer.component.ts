@@ -56,6 +56,7 @@ export class FiltercontainerComponent implements OnInit {
       outlet: [],
       saleType: ['totalSale'],
       saleMode: ['total'],
+      saleModeDays: [['1', '2', '3', '4', '5', '6', '7']],
       daysRange: ['CurrentMonth'],
       quarter: ['0'],
       customDateStart: [''],
