@@ -67,7 +67,6 @@ export class DashboardComponent implements OnInit {
         this.compareData.hookah, this.compareData.buffet, this.compareData.liquor],
     };
 
-
     this.cardList = [{
       title: 'Food Sale',
       totalValue: this.selectionData.total,

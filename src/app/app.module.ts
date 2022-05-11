@@ -7,8 +7,6 @@ import { AppComponent } from './app.component';
 import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ChartcontainerComponent } from './chartcontainer/chartcontainer.component';
-import { ChartModule } from 'angular2-chartjs';
 import { CardcontainerComponent } from './cardcontainer/cardcontainer.component';
 
 import { ApiModule } from './typescript-angular-client';
@@ -22,22 +20,23 @@ import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { FiltercontainerComponent } from './filtercontainer/filtercontainer.component';
-import {CardcontainercustomerComponent} from './cardcontainercustomer/cardcontainercustomer.component';
+import {HighchartsChartModule} from 'highcharts-angular';
+import { PaxBillsCustomerReportComponent } from './pax-bills-customer-report/pax-bills-customer-report.component';
+import { AllFoodSaleReportComponent } from './all-food-sale-report/all-food-sale-report.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
     DashboardComponent,
-    ChartcontainerComponent,
     CardcontainerComponent,
     SidebarcontainerComponent,
     HeadercontainerComponent,
     FiltercontainerComponent,
-    CardcontainercustomerComponent,
+    PaxBillsCustomerReportComponent,
+    AllFoodSaleReportComponent,
   ],
   imports: [
-    ChartModule,
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
@@ -46,6 +45,7 @@ import {CardcontainercustomerComponent} from './cardcontainercustomer/cardcontai
     AppRoutingModule,
     ApiModule,
     HttpClientModule,
+    HighchartsChartModule,
     BrowserAnimationsModule,
     MatNativeDateModule, MatDatepickerModule, MatInputModule, MatProgressSpinnerModule
   ],

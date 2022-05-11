@@ -13,15 +13,14 @@
   </div>
   <div class="col-md-6 row" >
     <div class="col-md-12" >
-    <app-cardcontainercustomer [title]="'Customer & Bill'"
-                       [totalPax]="totalPax" [billCount]="billCount"
-                       [customers]="customers"></app-cardcontainercustomer>
+      <app-pax-bills-customer-report [totalPax]="totalPax" [billCount]="billCount"
+                        [customers]="customers"></app-pax-bills-customer-report>
     </div>
   </div>
 
 </div>
 <div class="row" *ngIf="loading==false">
   <div class="col-md-12">
-    <app-chart chart_label="Total Dine in Sale" [chartData]="chartData" style="height: 100%"></app-chart>
+    <app-all-food-sale-report title="Sale Report" [chartData]="chartData" ></app-all-food-sale-report>
   </div>
 </div>
