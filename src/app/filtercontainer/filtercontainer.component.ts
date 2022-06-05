@@ -9,7 +9,7 @@ import {ContentControllerService} from '../typescript-angular-client';
 })
 export class FiltercontainerComponent implements OnInit {
 
-  private displayFilter = false;
+  displayFilter = false;
 
   companyList: any = [];
   cityList: any = [];
