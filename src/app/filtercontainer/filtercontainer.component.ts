@@ -73,7 +73,6 @@ export class FiltercontainerComponent implements OnInit {
 
   onSubmit() {
     const formData = {...this.chartFilterForm.value};
-    debugger;
     const outletList: any = [];
     if (formData.outlet) {
       formData.outlet.forEach( obj => {
