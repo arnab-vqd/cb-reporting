@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
   convertToDate(date: string) {
     if (date) {
       const tempDate: Date = new Date(date);
-      tempDate.setHours(2);
+      tempDate.setHours(8);
       return tempDate.toISOString().split('T')[0];
     }
     return '';
